@@ -1,0 +1,11 @@
+/* in the backend  */
+cd C:\Users\IssamYayou\Desktop\StudyOO\Udacity\Full-Stack Development Track\Nanodegree\projectsFSND\trivia_api\starter\backend
+set FLASK_APP=flaskr
+set FLASK_ENV=development
+FLASK run
+
+
+/* in the frontend npm install */
+cd C:\Users\IssamYayou\Desktop\StudyOO\Udacity\Full-Stack Development Track\Nanodegree\projectsFSND\trivia_api\starter\frontend
+npm start
+

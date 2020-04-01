@@ -58,6 +58,30 @@ class FormView extends Component {
       }
     })
   }
+  // submitCategory = (event) => {
+  //   event.preventDefault();
+  //   $.ajax({
+  //     url: '/categories', //TODO: update request URL
+  //     type: "POST",
+  //     dataType: 'json',
+  //     contentType: 'application/json',
+  //     data: JSON.stringify({
+  //       type: this.state.category,
+  //     }),
+  //     xhrFields: {
+  //       withCredentials: true
+  //     },
+  //     crossDomain: true,
+  //     success: (result) => {
+  //       document.getElementById("add-question-form").reset();
+  //       return;
+  //     },
+  //     error: (error) => {
+  //       alert('Unable to add question. Please try your request again')
+  //       return;
+  //     }
+  //   })
+  // }
 
   handleChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
@@ -100,7 +124,22 @@ class FormView extends Component {
         </form>
       </div>
     );
-  }
+   }
+  //   render() {
+  //    return (
+  //     <div id="add-form">
+  //       <h2>Add a New Trivia Category</h2>
+  //       <form className="form-view" id="add-category-form" onSubmit={this.submitCategory}>
+  //         <label>
+  //           Category
+  //           <input type="text" name="question" onChange={this.handleChange}/>
+  //         </label>
+        
+  //         <input type="submit" className="button" value="Submit" />
+  //       </form>
+  //     </div>
+  //   );
+  // }
 }
 
 export default FormView;

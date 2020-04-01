@@ -46,7 +46,7 @@ class QuestionView extends Component {
 
   createPagination(){
     let pageNumbers = [];
-    let maxPage = Math.ceil(this.state.totalQuestions / 10)
+    let maxPage = Math.ceil(this.state.totalQuestions / 3)
     for (let i = 1; i <= maxPage; i++) {
       pageNumbers.push(
         <span
@@ -95,7 +95,7 @@ class QuestionView extends Component {
         return;
       },
       error: (error) => {
-        alert('Unable to load questions. Please try your request again')
+        alert('Unable to load questions. post search Please try your request again')
         return;
       }
     })
