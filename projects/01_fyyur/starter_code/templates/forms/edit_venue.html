@@ -6,35 +6,63 @@
       <h3 class="form-heading">Edit venue <em>{{ venue.name }}</em> <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
       <div class="form-group">
         <label for="name">Name</label>
-        {{ form.name(class_ = 'form-control', autofocus = true) }}
+              {% if venue.name %}
+                {{ form.name(class_ = 'form-control', value= venue.name, autofocus = true) }}
+              {% else %}
+              {{ form.name(class_ = 'form-control', autofocus = true) }}
+              {% endif %}
       </div>
       <div class="form-group">
           <label>City & State</label>
           <div class="form-inline">
             <div class="form-group">
-              {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true) }}
+              {% if venue.city %}
+                {{ form.city(class_ = 'form-control', value= venue.city, autofocus = true) }}
+              {% else %}
+                {{ form.city(class_ = 'form-control', placeholder= 'City', autofocus = true) }}
+              {% endif %}
             </div>
             <div class="form-group">
-              {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true) }}
+              {% if venue.state %}
+                {{ form.state(class_ = 'form-control', value=venue.state, autofocus = true) }}
+              {% else %}
+                {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true) }}
+              {% endif %}
             </div>
           </div>
       </div>
       <div class="form-group">
         <label for="address">Address</label>
-        {{ form.address(class_ = 'form-control', autofocus = true) }}
+        {% if venue.address %}
+          {{ form.phone(class_ = 'form-control', value=venue.address, autofocus = true) }}
+        {% else %}
+          {{ form.address(class_ = 'form-control', autofocus = true) }}
+        {% endif %}
       </div>
       <div class="form-group">
           <label for="phone">Phone</label>
-          {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+          {% if venue.phone %}
+            {{ form.phone(class_ = 'form-control', value=venue.phone, autofocus = true) }}
+          {% else %}
+            {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+          {% endif %}
         </div>
       <div class="form-group">
         <label for="genres">Genres</label>
         <small>Ctrl+Click to select multiple</small>
-        {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form.state, autofocus = true) }}
+        {% if venue.genres %}
+          {{ form.genres(class_ = 'form-control', value=venue.genres, id=form.state, autofocus = true) }}
+        {% else %}
+          {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form.state, autofocus = true) }}
+        {% endif %}
       </div>
       <div class="form-group">
           <label for="genres">Facebook Link</label>
-          {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id=form.state, autofocus = true) }}
+          {% if venue.facebook_link %}
+            {{ form.facebook_link(class_ = 'form-control', value=venue.facebook_link, id=form.state, autofocus = true) }}
+          {% else %}
+            {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id=form.state, autofocus = true) }}
+          {% endif %}
         </div>
       <input type="submit" value="Edit Venue" class="btn btn-primary btn-lg btn-block">
     </form>

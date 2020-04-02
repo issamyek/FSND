@@ -1,0 +1,8 @@
+cd C:\Users\IssamYayou\Desktop\Udacity\Full-Stack Development Track\Nanodegree\Project 1 Fyyur\starter_code
+set FLASK_DEBUG=1 FLASK_APP=app
+flask run
+
+
+cd C:\Users\IssamYayou\Desktop\Udacity\Full-Stack Development Track\Nanodegree\Project 1 Fyyur\starter_code
+python
+from app import *
