@@ -190,35 +190,26 @@ def create_app(test_config=None):
   '''
   @app.route('/categories', methods=['POST'])
   def create_new_category():
+    if request.get_json() is None : abort(422)
     body = request.get_json()
 
     type_cat = body.get('type', None)
-    try:
-      if(type_cat is None):
-        abort(422)
-      else:
-        new_category = Category(type=type_cat)
-        new_category.insert()
-        return jsonify({
-            'success': True,
-            'created': new_category.id,
-            'categories': get_categories_from_DB(),
-            'total_categories': len(Category.query.all())
-          })
-    except:
-      abort(422)
+    
+    if(type_cat is None):
+      abort(404)
+    else:
+      new_category = Category(type=type_cat)
+      new_category.insert()
+      return jsonify({
+          'success': True,
+          'created': new_category.id,
+          'categories': get_categories_from_DB(),
+          'total_categories': len(Category.query.all())
+        })
+    # try:except:
+    #   abort(422)
 
-  '''
-  @TODO: 
-  Create a POST endpoint to get questions to play the quiz. 
-  This endpoint should take category and previous question parameters 
-  and return a random questions within the given category, 
-  if provided, and that is not one of the previous questions. 
 
-  TEST: In the "Play" tab, after a user selects "All" or a category,
-  one question at a time is displayed, the user is allowed to answer
-  and shown whether they were correct or not. 
-  '''
   @app.route('/quizzes', methods=['POST'])
   def quizzes_fanction():
     if request.get_json() is None: abort(422)
