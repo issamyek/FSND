@@ -1,0 +1,7 @@
+
+// the location of the trivia_test.py file
+cd C:\Users\IssamYayou\Desktop\StudyOO\Udacity\Full-Stack Development Track\Nanodegree\projectsFSND\trivia_api\starter\backend
+dropdb -U postgres trivia_test // password=post
+createdb -U postgres trivia_test 
+psql -U postgres trivia_test < trivia.psql 
+python test_flaskr.py
