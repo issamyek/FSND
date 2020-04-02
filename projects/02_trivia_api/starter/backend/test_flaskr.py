@@ -42,6 +42,39 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(len(data["categories"]))
 
+    def test_post_a_new_category(self):
+        post_category = {
+            'type':"a",
+        }
+
+        res = self.client().post('/categories',json=post_category)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True) 
+        self.assertTrue(len(data['categories']))   
+
+    def test_404_post_a_new_category(self):
+
+        post_category = {
+        }
+
+        res = self.client().post('/categories',json=post_category)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], "Resource Not Found")    
+
+    def test_422_post_a_new_category(self):
+
+        res = self.client().post('/categories')
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 422)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], "Unprocessable")    
+
     def test_get_paginated_questions(self):
         res = self.client().get('/questions?page=1')
         data = json.loads(res.data)
