@@ -98,6 +98,7 @@ One note before you delve into your tasks: for each endpoint you are expected to
   "type":"a"
 }
 ```
+
 ##### Example Response 
 ```json 
 { 
