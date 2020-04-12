@@ -33,27 +33,32 @@ def create_app(test_config=None):
 
     @app.route('/drinks')
     def get_drinks():
-        data = Drink.query.all()
-        drinks = list(map(Drink.short, data))
-        if drinks is None or len(drinks) == 0:
-            abort(404)
-        return jsonify({
-            'success': True,
-            'drinks': drinks
-        })
+        try:
+            data = Drink.query.all()
+            drinks = list(map(Drink.short, data))
+            if drinks is None or len(drinks) == 0:
+                abort(404)
+            return jsonify({
+                'success': True,
+                'drinks': drinks
+            })
+        except:
+            abort(422)    
 
     @app.route('/drinks-detail')
-    # require the 'get:drinks-detail' permission
     @requires_auth('get:drinks-detail')
     def get_drinks_detail(payload):
-        drinks_query = Drink.query.all()
-        drinks = list(map(Drink.long, drinks_query))
-        if drinks is None or len(drinks) == 0:
-            abort(404)
-        return jsonify({
-            'success': True,
-            'drinks': drinks
-        })
+        try:
+            drinks_query = Drink.query.all()
+            drinks = list(map(Drink.long, drinks_query))
+            if drinks is None or len(drinks) == 0:
+                abort(404)
+            return jsonify({
+                'success': True,
+                'drinks': drinks
+            })
+        except:
+            abort(422) 
 
     @app.route('/drinks', methods=['POST'])
     @requires_auth('post:drinks')
@@ -63,16 +68,14 @@ def create_app(test_config=None):
             abort(404)
         title = body.get('title', None)
         recipe = body.get('recipe', None)
-        # verify id there is no duplicate
         duplicate = Drink.query.filter(Drink.title == title).one_or_none()
         if duplicate is not None:
             abort(400)
-        # if the reciepe has not been inputed as a list
         if type(recipe) is not list:
             recipe = [recipe]
         try:
             new_drink = Drink(title=title, recipe=json.dumps(recipe))
-            new_drink.insert() # insert in the database
+            new_drink.insert()
 
             return jsonify({
                 'success': True,
@@ -80,17 +83,15 @@ def create_app(test_config=None):
             })
         except:
             abort(422)
-
-    
+  
     @app.route('/drinks/<int:drink_id>', methods=['PATCH'])
     @requires_auth('patch:drinks')
     def update_drink(payload, drink_id):
         try:
-            # get the element with given id
             drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
             if drink is None:
                 abort(404)
-            body = request.get_json()  # get the body
+            body = request.get_json()
             if body is None:
                 abort(404)
             updated_title = body.get('title', None)
@@ -98,29 +99,25 @@ def create_app(test_config=None):
             if updated_title is not None:
                 drink.title = updated_title
             if updated_recipe is not None:
-                # if the recipe is not a list transform it as a list
                 if type(updated_recipe) is not list:
                     updated_recipe = [updated_recipe]
-                # update drink.recipe with given value
                 drink.recipe = json.dumps(updated_recipe)
-            drink.update()  # update the record
+            drink.update() 
             return jsonify({
                 'success': True,
                 'drinks': [drink.long()]
             })
         except:
             abort(422)
-
-    
+   
     @app.route('/drinks/<drink_id>', methods=['DELETE'])
     @requires_auth('delete:drinks')
     def delete_drink(payload, drink_id):
-        # get the drink by id to delete
         drink = Drink.query.filter(Drink.id == drink_id).one_or_none()
         if drink is None:
             abort(404)
         try:
-            drink.delete()  # delete this item
+            drink.delete() 
             return jsonify({
                 "success": True,
                 "delete": drink_id
@@ -130,9 +127,7 @@ def create_app(test_config=None):
 
 
     ## Error Handling
-    '''
-    Example error handling for unprocessable entity
-    '''
+
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({
